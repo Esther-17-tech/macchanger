@@ -1,12 +1,18 @@
 import subprocess
+import platform
 
-# function to change IP address
-def change_ip(interface, new_ip, netmask):
+# function to change IP address and netmask of a network interface
+def change_ip(interface, new_ip, netmask="255.255.255.0"):
+    os_type = platform.system()
     try:
-        result = subprocess.run(f"sudo ifconfig {interface} {new_ip} netmask {netmask}", shell=True, capture_output=True, text=True)
-        if result.returncode == 0:
-            print(f"IP address of {interface} changed to {new_ip}/{netmask}")
+        if os_type in ["Linux", "Darwin"]:
+            subprocess.run(["sudo", "ifconfig", interface, new_ip, "netmask", netmask], check=True)
+            print(f"[+] IP address changed to {new_ip} with netmask {netmask} on {interface}")
+        elif os_type == "Windows":
+            cmd = f'netsh interface ip set address name="{interface}" static {new_ip} {netmask}'
+            subprocess.run(cmd, shell=True, check=True)
+            print(f"[+] IP address changed to {new_ip} with netmask {netmask} on {interface}")
         else:
-            print(f"Error changing IP address: {result.stderr}")
-    except Exception as e:
-        print(f"Error: {str(e)}")
+            print("Unsupported OS.")
+    except subprocess.CalledProcessError as e:
+        print(f"[-] Failed to change IP address: {e}")
