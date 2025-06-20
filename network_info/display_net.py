@@ -1,12 +1,15 @@
 import subprocess
+import platform
 
 # function to display to current network configuration
-def display_network_conf():
+def display_network_config():
+    os_type = platform.system()
     try:
-        result = subprocess.run(f"ifconfig", shell=True, capture_output=True, text=True)
-        if result.returncode == 0:
-            print(result.stdout)
+        if os_type in ["Linux", "Darwin"]:
+            subprocess.run(["ifconfig"])
+        elif os_type == "Windows":
+            subprocess.run(["ipconfig", "/all"])
         else:
-            print(result.stderr)
+            print("Unsupported OS.")
     except Exception as e:
-        print(f"Error: {str(e)}")
+        print(f"Error: {e}")

@@ -1,21 +1,30 @@
 import subprocess
 import re
+import platform
 
 # Check the current IP address
 def check_ip(interface):
+    os_type = platform.system()
     try:
-        result = subprocess.run(f"ip addr show {interface}", shell=True, capture_output=True, text=True)
-        if result.returncode == 0:
-            # Regrex to extract IP address from the result
-
-            ip_pattern = r"inet (\d+\.\d+\.\d+\.\d+)"
-            ip_match = re.search(ip_pattern, result.stdout)
-            if ip_match:
-                print(f" [+] IP Address of {interface}: {ip_match.group(1)}")
+        if os_type in ["Linux", "Darwin"]:
+            result = subprocess.check_output(["ifconfig", interface]).decode()
+            match = re.search(r'inet (\d+\.\d+\.\d+\.\d+)', result)
+            if match:
+                print(f"[+] Current IP on{interface}: {match.group(1)}")
             else:
-                print(f" [-] No IP address found for {interface}.")
+                print("[-] IP address.")
+        elif os_type == "Windows":
+            result = subprocess.check_output(["ipconfig"]).decode()
+            lines = result.splitlines()
+            for i, line in enumerate(lines):
+                if interface in line:
+                    for j in range(i, i+10):
+                        if "IPv4 Address" in lines[j]:
+                            ip = lines[j].split(":")[-1].strip()
+                            print(f"[+] Current IP on {interface}: {ip}")
+                            return
+            print("[-] IP not found.")
         else:
-            print(f"Error getting IP address: {result.stderr}")
-    
+            print("Unsupported OS.")
     except Exception as e:
-        print(f"Error: {str(e)}")
+        print(f"Error: {e}")
