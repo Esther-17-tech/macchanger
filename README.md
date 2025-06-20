@@ -21,7 +21,7 @@ This project is a powerful and versatile command-line tool designed for network 
 * Firewall Control: Enable, disable, and configure firewall rules for enhanced security.
 
 # Tutorial for Installation
-* (Coming soon)
+* 
 
 # Author: 
 * Ephraim Norbert
