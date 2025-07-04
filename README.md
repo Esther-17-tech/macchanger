@@ -21,13 +21,13 @@ This project is a powerful and versatile command-line tool designed for network 
 * Firewall Control: Enable, disable, and configure firewall rules for enhanced security.
 
 # Tutorial for Installation
-* Step 1: Clone the code 'git clone https://github.com/Esther-17-tech/macchanger.git` to your kali.
+* Step 1: Clone the code 'git clone https://github.com/Esther-17-tech/macchanger` to your kali.
 * Step 2: Open the file mac_changer.py from the macchanger directory and Code OSS.
-* Step 4: View the help page using the command `python mac_changer.py -h`.
-* Step 5: Display the current network configuration - `python mac_changer.py -n`.
-* Step 6: To Change IP Interface - `python mac_changer.py eth0 ( NEW_IP), and (NETMASK)`.
-* Step 7: Change the MAC address of a network interface - `python mac_changer.py -m eth0 (NEW MAC)`.
-* Step 8: Check the current IP address - `python mac_changer.py -c`.
+* Step 3: View the help page using the command `python mac_changer.py -h`.
+* Step 4: Display the current network configuration - `python mac_changer.py -n`.
+* Step 5: To Change IP Interface - `python mac_changer.py eth0 ( NEW_IP) (NETMASK)`.
+* Step 6: Change the MAC address of a network interface - `python mac_changer.py -m eth0 (NEW MAC)`.
+* Step 7: Check the current IP address - `python mac_changer.py -c`.
 
 # Author: 
 * Ephraim Norbert
